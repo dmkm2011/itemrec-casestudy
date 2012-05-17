@@ -4,7 +4,7 @@ function [ output_args ] = constructGraph( input_args )
 %   The result is a sparse matrix represent this graph, which 
 %   then will be used with MatlabBGL.
 
-% maybe after construct the graph,
+% maybe after constructing the graph,
 % we will store the graph into a *.mat file,
 % to avoid creating the graph again and again.
 
