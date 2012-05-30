@@ -1,37 +1,32 @@
-function [ G ] = constructGraph( users, items )
-%CONSTRUCTGRAPH Construct a bipartite users-items graph.
+function [ G ] = constructGraph( users, items, params )
+%CONSTRUCTGRAPH Construct a users-items graph.
 %   This function will create the graph with all information.
 %   The result is a sparse matrix represent this graph, which 
 %   then will be used with MatlabBGL.
-
-% maybe after constructing the graph,
-% we will store the graph into a *.mat file,
-% to avoid creating the graph again and again.
 
     numUsers = length(users.userIds);
     numItems = length(items.itemIds);
     numVertices = numUsers + numItems;
     
-    rowIndices = zeros(3*numVertices, 1);
-    colIndices = zeros(3*numVertices, 1);
-    edgeValues = zeros(3*numVertices, 1);
+    matrix = zeros(numVertices);
     
     % user-user distance
-    for i=1:numUsers
-        for j=i+1:numUsers
-            computeUserDistance(users, i, j);
-        end
-    end
+    matrix(1:numUsers, 1:numUsers) = ...
+        computeUserDistance(users, params.userDistanceWeight);
+    disp('Done computing user-user distances');
     
     % item-item distance
-    for i=1:numItems
-        for j=i+1:numItems
-            computeItemDistance(items, i, j);
-        end
-    end
+    matrix(numUsers+1:end, numUsers+1:end) = ...
+        computeItemDistance(items, params.itemDistanceWeight);
+    disp('Done computing item-item distances');
     
     % user-item 
+    userItemDist = computeUserItemDistance(users.userIds, items.itemIds, users.recLogTrain);
+    matrix(1:numUsers, numUsers+1:end) = userItemDist;
+    matrix(numUsers+1:end, 1:numUsers) = userItemDist';
+    disp('Done computing user-item distances');
     
-    G = sparse(rowIndices, colIndices, edgeValues);
+    G = sparse(matrix);
+    disp('Done creating sparse matrix');
 end
 
