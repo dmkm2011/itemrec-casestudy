@@ -35,7 +35,8 @@ function [ dist ] = computeUserActionDistance( userId, userIdList, actions, sns 
         end
         
         % normalization
-        s = s/(size(userActions, 2));
+        %s = s/(size(userActions, 2));
+        s = s/4.01;
         
         % subtracted from 1 because d is kind of similarity measure
         % the bigger d is, the more "similar" users are

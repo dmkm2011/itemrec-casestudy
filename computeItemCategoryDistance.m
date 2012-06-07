@@ -11,10 +11,10 @@ function [ dist ] = computeItemCategoryDistance( cat1, cats )
     dist = zeros(size(cats, 1), 1);
     for i=1:n
        id = and(cats(:, i) ~= cat1(i), dist == 0);
-       dist(id) = 2*(n+1-i);
+       dist(id) = (n+1-i);
     end
        
     % then normalize the distance
-    dist = dist ./ (2*n);
+    dist = dist ./ (n);
 end
 
