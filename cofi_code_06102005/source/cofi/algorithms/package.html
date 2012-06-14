@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>RACOFI API Documentation</title>
+	</head>
+
+	<body>
+		<h1>RACOFI : Rule-Applying Collaborative Filtering - algorithms package.</h1>
+
+		<p>This package is an implementation of several of the most common 
+	collaborative filtering algorithms. They are basically devided in the following
+classes.</p>
+
+	<ul>
+	<li> Memory-based algorithms have been implemented in the classes Pearson, Mean STI Pearson and
+	STI Pearson. They are slower than other algorithms, but generally more accurate.
+	STI Pearson was found to be more accurate.
+	</li>
+	<li>Eigentaste algorithms have been implemented as JesterClassical
+	and JesterSTI. These make the assumption that there exists a standard
+data set rated by all users.</li>
+	<li>Other implementations are said to be learning-free and are very fast. The most
+commonly used is PerItemAverage and it is optimal if nothing is known about the current
+user. Other schemes such as STINonPersonalized are more accurate if something is known
+about the current user. Experimental results tend to show that STINonPersonalized2steps
+is slightly better.</li>
+
+	<li>There are item-based schemes and right now, only OptimalWeight has been implemented.
+These schemes are very fast, but require some learning phase.</li>
+	</ul>
+
+<p>Some schemes such as STINonPersonalized automatically fall back on PerItemAverage
+when they can't provide an enhanced prediction.</p>
+	<p>Using them is simple. They all feed off an EvaluationSet you must provide which is
+simply a hash table providing (one-dimensional) ratings about the items in your data set.
+Once created, you can keep the algorithms in sync and avoid calling the constructor
+each time, which would be costly, by calling the addedUser and RemovedUser. If a user
+changes, simply call removedUser on the evaluation as it were before the change, and then
+addedUser with the evaluation after the change. The method completeUser provides you with
+a prediction as an array. We assume that item ids go from 0 to n-1, so you need, at
+some point, a map from your real it idems to 0,..., n-1.</p>
+	<p>Some algorithms use evaluation objects (which are TIntFloatHashMap) as keys. Thus,
+you must make sure you keep the same objects in your EvaluationSet and if not, either
+call removedUser when you discard one and addedUser after you've added a new one, or
+simply call the constructor all over again.</p>
+
+<p>CFS objects that do not explicitely overwrite addedUser and removedUser should
+be treated with caution: they probably do not (yet) implement these methods.</p>
+	</body>
+</html>

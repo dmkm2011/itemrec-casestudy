@@ -22,7 +22,7 @@ function [ G ] = constructGraph( users, items, params )
     
     % user-item 
     userItemDist = computeUserItemDistance(users.userIds, items.itemIds, ...
-                users.recLogTrain, users.keywords, items.normedKeywordsOfUser);
+                users.trainSet, users.keywords, items.normedKeywordsOfUser);
             
     matrix(1:numUsers, numUsers+1:end) = userItemDist;
     matrix(numUsers+1:end, 1:numUsers) = userItemDist';

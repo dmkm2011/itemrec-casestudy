@@ -1,0 +1,64 @@
+====What is this about?=====
+
+COFI is a research collaborative filtering library in Java. It is meant for Java developpers hence the rather terse documentation.
+
+The library was extracted out of the RACOFI engine which ran a servlet-based web site in 2003-2004.
+
+====Library dependencies====
+
+JSci: used for some linear algebra routines
+http://jsci.sourceforge.net/
+
+
+gnu.trove: used for fast data structures
+http://trove4j.sourceforge.net/
+
+
+JUnit: used for unit testing 
+http://www.junit.org/
+
+The code will not build cleanly without these libraries though the JSci library can be done without.
+
+====Usage=====
+
+If everything is configured neatly, you should be able to compile this file:
+
+source/cofi/benchmark/Benchmark.java (class cofi.benchmark.Benchmark)
+
+The code depends on the presence of some data files, you need to either provide your own parser or use one of them at:
+
+source/cofi/parsers/
+
+====Where are the Slope One algorithms=====
+
+See /source/cofi/algorithms/linear/ConstantBias.java, you may also want to use the algorithmes in cofi/algorithms/composition/, especially cofi/algorithms/composition/AdjustScale.java.
+
+
+==== What if I prefer PHP? ====
+
+Please see the following technical report with code samples:
+
+Daniel Lemire, Sean McGrath, Implementing a Rating-Based Item-to-Item Recommender System in PHP/SQL, Technical Report D-01, January 2005.
+
+http://www.daniel-lemire.com/fr/abstracts/TRD01.html
+
+
+====Related papers======
+
+
+Daniel Lemire, Harold Boley, Sean McGrath, Marcel Ball, Collaborative Filtering and Inference Rules for Context-Aware Learning Object Recommendation, International Journal of Interactive Technology & Smart Education, Volume 2, Issue 3, August 2005.
+
+http://www.daniel-lemire.com/fr/abstracts/ITSE2005.html
+
+Daniel Lemire, Scale and Translation Invariant Collaborative Filtering Systems. Information Retrieval, 8 (1), pages 129-150, January 2005.
+
+http://www.daniel-lemire.com/fr/abstracts/IR2003.html
+
+Michelle Anderson, Marcel Ball, Harold Boley, Stephen Greene, Nancy Howse, Daniel Lemire, Sean McGrath, RACOFI: Rule-Applying Collaborative Filtering Systems, Proceedings IEEE/WIC COLA'03, Halifax, Canada, October 2003.
+
+http://www.daniel-lemire.com/fr/abstracts/COLA2003.html
+
+
+October 6th 2005
+Daniel Lemire
+http://www.daniel-lemire.com/en/

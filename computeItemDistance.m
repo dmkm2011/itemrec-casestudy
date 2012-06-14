@@ -5,14 +5,13 @@ function [ dist ] = computeItemDistance( items, itemDistanceWeight )
 % where n is the total number of items
 
     numItems = length(items.itemIds);
-    %dist = zeros(numItems);
+    
     catDistance = zeros(numItems);
     kwDistance = zeros(numItems);
     
     % normalize the keyword vectors
-    itemKeywords = items.keywords;
-    %itemKeywords = itemKeywords ./ max(max(itemKeywords), [], 2);
-    %itemKeywords = items.keywords > 0;
+    %itemKeywords = items.keywords;
+    itemKeywords = items.normedKeywordsOfUser;
     
     for i=1:numItems-1
         
@@ -25,19 +24,17 @@ function [ dist ] = computeItemDistance( items, itemDistanceWeight )
         % keyword-based distance
         kwDist = computeKeywordDistance(itemKeywords(i, :), ...
                                     itemKeywords(i+1:end, :));
+        kwDist = kwDist ./ max(kwDist);
         kwDistance(i, i + 1:end) = kwDist';
         kwDistance(i + 1:end, i) = kwDist;
     end
-    
-    % normalize the keyword distance
-    kwDistance = kwDistance ./ max(max(kwDistance), [], 2);
     
     % weighted distance
     dist = itemDistanceWeight * kwDistance + ...
        (1 - itemDistanceWeight) * catDistance;
    
-    %if (any(dist > 1))
-    %    disp('WTF');
-    %end
+    if (any(dist > 1))
+        disp('WTF Item');
+    end
     
 end

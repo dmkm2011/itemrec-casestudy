@@ -17,17 +17,25 @@ function [ dist ] = computeUserDistance( users, userDistanceWeight)
         actDistance(:, i) = actDistance(:, i) + actDist;
         
         % the keyword distance
-        kwDist = computeKeywordDistance(users.keywords(i, :), ...
-                users.keywords(i+1:end, :));
+        %kwDist = computeKeywordDistance(users.keywords(i, :), ...
+        %        users.keywords(i+1:end, :));
+        kwDist = computeKeywordDistance(users.normedKeywords(i, :), ...
+                users.normedKeywords(i+1:end, :));
+        kwDist = kwDist ./ max(kwDist);
         kwDistance(i, i + 1:end) = kwDist';
         kwDistance(i + 1:end, i) = kwDist;
     end
     
     % normalize
     actDistance = actDistance ./ 2;
-    kwDistance = kwDistance ./ max(max(kwDistance), [], 2);
+    %kwDistance = kwDistance ./ max(max(kwDistance), [], 2);
+    %kwDistance = kwDistance ./ 2;
     
     dist = userDistanceWeight * actDistance + ...
         (1 - userDistanceWeight) * kwDistance;
+    
+    if (any(dist > 1))
+        disp('WTF');
+    end
 end
 
